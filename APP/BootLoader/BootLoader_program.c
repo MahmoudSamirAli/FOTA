@@ -84,7 +84,9 @@ void BL_JumpToAnApp( u32 AppBaseAddress )
 {
 	P2F_t StartupcodeAddress ;
 	SCB_ResetVectorTableAddress( AppBaseAddress) ;
-	StartupcodeAddress =  *( (P2F_t*) (AppBaseAddress + 0x4) ) ; // startup code address be in the vector table address + 4 (data sheet page 41)
+	// startup code address (which is the address of rest handler) be in the vector table address + 4 (data sheet page 41 at the Reference Manuel )
+	// Address must be casted to pointer to function due to the calling in the next step.
+	StartupcodeAddress =  *( (P2F_t*) (AppBaseAddress + 0x4) ) ;
 	StartupcodeAddress() ;
 }
 
